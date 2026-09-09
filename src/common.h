@@ -17,7 +17,11 @@
 #include <assert.h>
 
 // replacements for WebRTC's various assert-like macros
-#define RTC_COMPILE_ASSERT(expr) static_assert(expr, #expr)
+#if defined(__GNUC__) || defined(__clang__) || (defined(__STDC_VERSION__) && __STDC_VERSION__ >= 201112L)
+#define RTC_COMPILE_ASSERT(expr) _Static_assert(expr, #expr)
+#else
+#define RTC_COMPILE_ASSERT(expr) typedef char rtc_ca_[(expr) ? 1 : -1]
+#endif
 #define RTC_DCHECK(expr) assert(expr)
 #define RTC_DCHECK_GT(a,b) assert((a) > (b))
 #define RTC_DCHECK_LT(a,b) assert((a) < (b))
