@@ -30,3 +30,15 @@ int32_t WebRtcSpl_DivW32W16(int32_t num, int16_t den)
         return (int32_t)0x7FFFFFFF;
     }
 }
+
+uint32_t WebRtcSpl_DivU32U16(uint32_t num, uint16_t den)
+{
+    // Guard against division with 0
+    if (den != 0)
+    {
+        return (uint32_t)(num / den);
+    } else
+    {
+        return (uint32_t)0xFFFFFFFF;
+    }
+}
